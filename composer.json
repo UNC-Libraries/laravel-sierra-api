@@ -2,7 +2,7 @@
     "name": "UncLibrary/SierraApi",
     "description": "Sierra API controller for Laravel",
     "type": "laravel-package",
-    "homepage": "https://gitlab.lib.unc.edu/cappdev/laravel-sierra-api",
+    "homepage": "https://github.com/queryluke/laravel-sierra-api",
     "license": "MIT",
     "authors": [
         {
@@ -10,11 +10,8 @@
             "email": "lukeaeschleman@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "require": {},
     "autoload": {
-        "psr-4": {
+        "psr-0": {
             "UncLibrary\\SierraApi\\": "src/"
         }
     }
