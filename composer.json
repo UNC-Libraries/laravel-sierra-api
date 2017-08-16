@@ -1,5 +1,5 @@
 {
-    "name": "UncLibrary/SierraApi",
+    "name": "cappdev/laravel-sierra-api",
     "description": "Sierra API controller for Laravel",
     "type": "laravel-package",
     "homepage": "https://github.com/queryluke/laravel-sierra-api",
@@ -11,7 +11,7 @@
         }
     ],
     "autoload": {
-        "psr-0": {
+        "psr-4": {
             "UncLibrary\\SierraApi\\": "src/"
         }
     }
