@@ -47,8 +47,9 @@ class SierraApi
         $cleanPath = implode('/',array_filter(explode('/',$path)));
         $this->endpoint = "$host/$cleanPath/v4/";
 
-        if(isset($session->_sierra_token)){
-            $this->token = $session->_sierra_token;
+        $session_token = $session->get('_sierra_token');
+        if($session_token){
+            $this->token = $session_token;
         } else {
             $this->_accessToken();
         }
@@ -62,7 +63,8 @@ class SierraApi
      *
      * @return boolean True if token is valid
      */
-    private function _checkToken() {
+    private function _checkToken()
+    {
 
         if (!$this->token || (time() >= $this->token->expires_at)) {
             return $this->_accessToken();
@@ -101,7 +103,7 @@ class SierraApi
         if (empty($token->error)) {
             $token->expires_at = time() + $token->expires_in;
             $this->token = $token;
-            session(['_sierra_token' => $this->token]);
+            session(['_sierra_token', $this->token]);
             return true;
         }
         return false;
@@ -126,7 +128,11 @@ class SierraApi
         $type = strtolower($type);
 
         $ch = curl_init();
-        $headers = ['Authorization: ' . $this->token->token_type . ' ' . $this->token->access_token];
+        $headers = [
+            'Authorization: ' . title_case($this->token->token_type) . ' ' .$this->token->access_token,
+            'Content-Type: application/json;charset=UTF-8',
+            'User-Agent: Sierra Api Client',
+        ];
 
         if ($type === 'post') {
             $headers[] = 'Content-Type: application/json';
@@ -162,7 +168,15 @@ class SierraApi
     public function get($resource, $params = array()) {
         if (!$this->_checkToken()) return null;
 
+
+        // For whatever reason the SierraAPI only seems to selectively authenticate the token.
+        // I could not figure out why.
+        $i = 0;
         $response = $this->_request($this->endpoint . $resource, $params);
+        while($response['status'] == 401 || $i == 15){
+            $i++;
+            $response = $this->_request($this->endpoint . $resource, $params);
+        }
 
         if ($response['status'] != 200) return null;
 
