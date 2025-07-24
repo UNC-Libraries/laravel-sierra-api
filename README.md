@@ -15,7 +15,7 @@ A laravel package for querying the Sierra API.
 
 2. Add the following to your "require" section of your `composer.json` file
 ```
-    "cappdev/laravel-sierra-api": "dev-master",
+    "cappdev/laravel-sierra-api": "dev-main",
 ```
 
 3. Run `composer update` to install the package
