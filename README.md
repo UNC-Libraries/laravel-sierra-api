@@ -8,7 +8,7 @@ A laravel package for querying the Sierra API.
 "repositories":[
         {
             "type":"vcs",
-            "url":"git@gitlab.lib.unc.edu:cappdev/laravel-sierra-api.git"
+            "url":"https://github.com/UNC-Libraries/laravel-sierra-api.git"
         }
     ],
 ```
